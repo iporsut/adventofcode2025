@@ -26,10 +26,11 @@ func main() {
 	fmt.Println(countAll)
 }
 
+var dirs = [8][2]int{{-1, -1}, {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}}
+
 func markAccess(maps [][]rune) (int, [][]rune) {
 	result := make([][]rune, len(maps))
 	countAll := 0
-
 	for i := 0; i < len(maps); i++ {
 		result[i] = make([]rune, len(maps[i]))
 		for j := 0; j < len(maps[i]); j++ {
@@ -37,34 +38,14 @@ func markAccess(maps [][]rune) (int, [][]rune) {
 				result[i][j] = '.'
 				continue
 			}
-
 			if maps[i][j] == '@' {
 				count := 0
-				if i-1 >= 0 && j-1 >= 0 && maps[i-1][j-1] == '@' {
-					count++
+				for _, dir := range dirs {
+					ni, nj := i+dir[0], j+dir[1]
+					if ni >= 0 && ni < len(maps) && nj >= 0 && nj < len(maps[i]) && maps[ni][nj] == '@' {
+						count++
+					}
 				}
-				if i-1 >= 0 && maps[i-1][j] == '@' {
-					count++
-				}
-				if i-1 >= 0 && j+1 < len(maps[i]) && maps[i-1][j+1] == '@' {
-					count++
-				}
-				if j+1 < len(maps[i]) && maps[i][j+1] == '@' {
-					count++
-				}
-				if i+1 < len(maps) && j+1 < len(maps[i]) && maps[i+1][j+1] == '@' {
-					count++
-				}
-				if i+1 < len(maps) && maps[i+1][j] == '@' {
-					count++
-				}
-				if i+1 < len(maps) && j-1 >= 0 && maps[i+1][j-1] == '@' {
-					count++
-				}
-				if j-1 >= 0 && maps[i][j-1] == '@' {
-					count++
-				}
-
 				if count < 4 {
 					result[i][j] = '.'
 					countAll++
@@ -74,6 +55,5 @@ func markAccess(maps [][]rune) (int, [][]rune) {
 			}
 		}
 	}
-
 	return countAll, result
 }
