@@ -26,10 +26,7 @@ func main() {
 	for i := 0; i < len(freshRanges); i++ {
 		merged := false
 		for j := i + 1; j < len(freshRanges); j++ {
-			if freshRanges[j][0] > freshRanges[i][1] {
-				continue
-			}
-			if freshRanges[j][1] < freshRanges[i][0] {
+			if freshRanges[j][0] > freshRanges[i][1] || freshRanges[j][1] < freshRanges[i][0] {
 				continue
 			}
 			freshRanges[j] = Range{
