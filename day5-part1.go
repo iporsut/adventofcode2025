@@ -10,7 +10,6 @@ type Range [2]int
 
 func main() {
 	var freshRanges []Range
-
 	scaner := bufio.NewScanner(os.Stdin)
 	for scaner.Scan() {
 		line := scaner.Text()
@@ -22,7 +21,6 @@ func main() {
 		fmt.Sscanf(line, "%d-%d", &r[0], &r[1])
 		freshRanges = append(freshRanges, r)
 	}
-
 	var countFresh int
 	for scaner.Scan() {
 		line := scaner.Text()
@@ -35,6 +33,5 @@ func main() {
 			}
 		}
 	}
-
 	fmt.Println(countFresh)
 }
